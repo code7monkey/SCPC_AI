@@ -1,0 +1,3 @@
+ID,img_path,Question,A,B,C,D,answer
+TRAIN_00001,images/v7w_0001.jpg,What is the color of the sky?,Blue,Red,Green,Yellow,A
+TRAIN_00002,images/v7w_0002.jpg,How many cats are there?,One,Two,Three,Four,B

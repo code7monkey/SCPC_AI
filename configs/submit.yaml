@@ -1,0 +1,29 @@
+# Default inference configuration for the VQA BEiT‑3 project.
+#
+# Supply paths to one or more model checkpoints in the order you wish to
+# evaluate them.  The script will generate predictions for each
+# checkpoint and then take the majority vote across all predictions.
+
+test_csv: data/test.csv              # Path to the test CSV file
+tokenizer_path: assets/tokenizer     # Path to the sentencepiece model directory
+
+checkpoints:
+  - finetuned_model_file/checkpoint-0.pth
+  - finetuned_model_file/checkpoint-1.pth
+  - finetuned_model_file/checkpoint-2.pth
+  - finetuned_model_file/checkpoint-best.pth
+
+# Optionally specify output directories matching each checkpoint.  These
+# directories are not used by the current implementation but are
+# included here for completeness and future use.
+output_dirs:
+  - e1/
+  - e2/
+  - e3/
+  - e4/
+
+sample_submission: data/sample_submission.csv
+output_submission: submission.csv
+num_classes: 4
+batch_size: 32
+device: ''

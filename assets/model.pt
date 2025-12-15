@@ -1,0 +1,5 @@
+This is a placeholder for the fine‑tuned model weights.
+
+In a real project you should replace this file with the actual `.pt` or
+`.pth` checkpoint produced by training.  Large binary files like this
+should be tracked using Git LFS to avoid bloating your repository.

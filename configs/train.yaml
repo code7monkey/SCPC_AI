@@ -1,0 +1,22 @@
+# Default training configuration for the VQA BEiT‑3 project.
+#
+# Adjust the paths below to point to your data and model files.  The
+# training script (train.py) will read this YAML and populate the
+# dictionary passed to run_training().
+
+train_csv: data/train.csv        # Path to the formatted training CSV
+val_csv: ''                      # Optional: separate validation CSV.  Leave blank to split train_csv.
+test_csv: data/test.csv          # Path to the formatted test CSV (used for JSON export)
+json_dir: json_file              # Directory to write train.json, val.json and test.json
+
+tokenizer_path: assets/tokenizer # Path to the sentencepiece model directory
+model_ckpt: assets/model.pt      # Initial checkpoint to load (leave empty to start from scratch)
+output_dir: finetuned_model_file # Where to save checkpoints
+
+num_classes: 4                   # Number of answer classes (always 4 for Visual7W)
+batch_size: 16                   # Training and validation batch size
+epochs: 1                        # Number of training epochs (increase for real training)
+learning_rate: 2e-5             # Learning rate for AdamW
+val_split: 0.15                  # Fraction of training data reserved for validation if val_csv is empty
+seed: 42                         # Random seed for reproducibility
+device: ''                       # Optional: specify 'cpu' or 'cuda'; left empty will auto‑detect

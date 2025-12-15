@@ -1,0 +1,3 @@
+ID,img_path,Question,A,B,C,D
+TEST_00001,images/v7w_0003.jpg,What is the object on the table?,Book,Laptop,Phone,Plate
+TEST_00002,images/v7w_0004.jpg,What animal is in the picture?,Dog,Cat,Bird,Fish

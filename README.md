@@ -1,62 +1,66 @@
-# Samsung collegiate programming challenges
+# Samsung Collegiate Programming Challenges
 
-**VQA Project – BEiT‑3 기반 멀티모달 질문답변 모델**  
-**데모용 베이스라인 코드 – 시각–언어 모델 finetuning**
+**VQA Project – BEiT-3 기반 멀티모달 질문응답 모델**  
+**Demo Baseline Code – Vision–Language Model Fine-tuning**
+
+---
+
+This repository provides a **baseline implementation for a Visual Question Answering (VQA) task** using a **BEiT-3 multimodal model**.  
+It is intended for demonstration and educational purposes, focusing on **image–text joint modeling and fine-tuning workflows**.
+
+The codebase is organized in a **modular and extensible structure**, with **YAML-based configuration files** to manage training and inference without modifying source code.
 
 ---
 
 ## 🎯 Project Goals
 
-* **멀티모달 입력 처리** – 이미지와 질문(텍스트)를 함께 처리하는 VQA 모델을 구현
-* **BEiT‑3 모델 미세조정** – 사전학습된 비전–언어 모델을 특정 VQA 데이터셋에 맞게 fine‑tune 
-* **모듈화된 코드 구조** – `src/` 패키지에 데이터셋, 모델 래퍼, 손실 함수, 학습 루프 등을 모듈화
-* **YAML 기반 실험 관리** – `configs/train.yaml`과 `configs/submit.yaml`을 통해 학습 및 추론 설정을 관리
+- **Multimodal input processing** – jointly handle images and textual questions
+- **Fine-tuning BEiT-3** – adapt a pretrained vision–language model to a VQA dataset
+- **Modular code design** – datasets, models, losses, and training loops separated under `src/`
+- **YAML-based experiment management** – control training and inference via `configs/train.yaml` and `configs/submit.yaml`
 
 ---
 
 ## 📁 Project Structure
 
-```
-vqa_project/
-├── src/
-│   ├── __init__.py          # 패키지 초기화 및 주요 클래스/함수 노출
-│   ├── dataset.py           # VQA 데이터셋 로딩 및 전처리
-│   ├── losses.py            # 손실 함수 (예: cross entropy)
-│   ├── model.py             # BEiT‑3 모델 래퍼 (HuggingFace 기반)
-│   ├── trainer.py           # 학습 및 추론 루틴
-│   └── utils.py             # 공용 유틸리티 (시드 고정 등)
-│
-├── train.py                 # 학습 실행 스크립트
-├── inference.py             # 추론 및 제출 파일 생성 스크립트
-│
-├── configs/
-│   ├── train.yaml           # 학습용 설정
-│   └── submit.yaml          # 추론/제출용 설정
-│
-├── assets/
-│   ├── model.pt             # 미세조정된 모델 가중치 저장 위치 (placeholder)
-│   └── tokenizer/           # 문장 토크나이저 파일 폴더 (placeholder)
-│
-├── data/
-│   ├── train.csv            # 학습 데이터 (placeholder)
-│   └── test.csv             # 테스트 데이터 (placeholder)
-│
-├── requirements.txt         # 필요 패키지 목록
-├── .gitignore               # Git 무시 파일 패턴
-└── .gitattributes           # Git 속성 (예: LFS 설정)
-```
+    vqa_project/
+    ├── src/
+    │   ├── __init__.py          # Package initialization and exports
+    │   ├── dataset.py           # VQA dataset loading and preprocessing
+    │   ├── losses.py            # Loss functions (e.g., cross entropy)
+    │   ├── model.py             # BEiT-3 model wrapper (HuggingFace-based)
+    │   ├── trainer.py           # Training and inference routines
+    │   └── utils.py             # Common utilities (e.g., seed fixing)
+    │
+    ├── train.py                 # Training entry script
+    ├── inference.py             # Inference & submission generation script
+    │
+    ├── configs/
+    │   ├── train.yaml           # Training configuration
+    │   └── submit.yaml          # Inference / submission configuration
+    │
+    ├── assets/
+    │   ├── model.pt             # Fine-tuned model weights (placeholder)
+    │   └── tokenizer/           # Tokenizer files (placeholder)
+    │
+    ├── data/
+    │   ├── train.csv            # Training data (placeholder)
+    │   └── test.csv             # Test data (placeholder)
+    │
+    ├── requirements.txt         # Required Python packages
+    ├── .gitignore               # Git ignore patterns
+    └── .gitattributes           # Git attributes (e.g., LFS settings)
 
 ---
 
 ## 🛠 Environment Setup
 
-Python 3.9+ 권장
+Python **3.9+** is recommended.
 
-```bash
-pip install -r requirements.txt
-```
+    pip install -r requirements.txt
 
-`requirements.txt`에는 PyTorch, HuggingFace Transformers, pandas 등 주요 라이브러리가 기재, GPU를 사용할 경우 CUDA 호환 버전의 PyTorch를 설치
+The `requirements.txt` file includes core dependencies such as **PyTorch**, **HuggingFace Transformers**, and **pandas**.  
+When using a GPU, make sure to install a **CUDA-compatible version of PyTorch**.
 
 ---
 
@@ -64,29 +68,46 @@ pip install -r requirements.txt
 
 ### Training
 
-BEiT‑3 모델을 미세조정하려면 다음과 같이 실행:
+To fine-tune the BEiT-3 model, run:
 
-```bash
-python train.py --config configs/train.yaml
-```
+    python train.py --config configs/train.yaml
 
-`train.py`는 YAML 설정을 읽어 랜덤 시드를 고정, `src/dataset.py`를 사용해 CSV 데이터를 로딩 및 JSON 포맷으로 변환. 그 후 `src/trainer.py`의 학습 루틴을 호출하여 모델을 fine‑tune. 기본적으로 단순한 PyTorch 학습 루프를 사용하지만, 필요하다면 HuggingFace의 `Trainer` 또는 Microsoft가 제공하는 BEiT‑3 finetuning 스크립트를 `subprocess`로 호출하도록 수정할 수 있음.
+The training script performs the following steps:
+
+- Loads training configuration from the YAML file
+- Fixes random seeds for reproducibility
+- Loads and preprocesses CSV-based VQA data via `src/dataset.py`
+- Calls the training loop implemented in `src/trainer.py` to fine-tune the model
+
+By default, a simple PyTorch training loop is used.  
+If needed, this can be extended to use **HuggingFace Trainer** or to call **official BEiT-3 fine-tuning scripts** via `subprocess`.
+
+---
 
 ### Inference
 
-학습된 모델로 테스트 데이터에 대한 예측을 생성하려면 아래 명령:
+To generate predictions on the test dataset:
 
-```bash
-python inference.py --config configs/submit.yaml
-```
+    python inference.py --config configs/submit.yaml
 
-이 스크립트는 `assets/model.pt`와 `assets/tokenizer/`에 저장된 미세조정된 모델과 토크나이저를 로드. 그런 다음 테스트 CSV를 전처리하여 모델에 입력하고, `src/trainer.py`에 정의된 추론 루틴을 통해 답안을 생성. 다수의 체크포인트를 앙상블하는 기능도 YAML 파일에서 설정 가능.
+The inference script:
+
+- Loads the fine-tuned model from `assets/model.pt`
+- Loads the tokenizer from `assets/tokenizer/`
+- Preprocesses the test CSV data
+- Runs inference using routines defined in `src/trainer.py`
+- Outputs predictions in the required submission format
+
+Ensembling multiple checkpoints can be enabled and configured directly in the YAML file.
 
 ---
 
 ## 📜 Notes
 
-* `assets/model.pt`와 `assets/tokenizer/`는 빈 디렉터리로 제공. 실제 학습 전에 BEiT‑3 사전학습 모델과 문장 토크나이저를 다운로드하여 이 위치에 저장해야 함.
-* `data/train.csv`와 `data/test.csv`는 예시용 빈 파일입니다. 실제 실험에서는 Visual7W와 같은 원본 데이터셋을 CSV 형식으로 전처리하여 교체해야 함.
-* `configs/train.yaml`과 `configs/submit.yaml`에는 데이터 경로, 하이퍼파라미터, 출력 경로 등이 정의되어 있습니다. 실험에 따라 적절히 수정.
-* `.gitignore`에는 큰 데이터와 체크포인트를 Git에서 제외하도록 설정되어 있습니다. 필요하다면 `.gitattributes`를 수정해 Git LFS로 관리할 파일을 지정 가능.
+- `assets/model.pt` and `assets/tokenizer/` are provided as empty placeholders.  
+  Download the pretrained BEiT-3 weights and tokenizer files and place them here before training.
+- `data/train.csv` and `data/test.csv` are example placeholders.  
+  For actual experiments, preprocess datasets such as **Visual7W** into CSV format and replace these files.
+- All dataset paths, hyperparameters, and output directories are defined in `configs/train.yaml` and `configs/submit.yaml`.
+- Large files such as datasets and checkpoints are excluded via `.gitignore`.  
+  If needed, `.gitattributes` can be updated to manage large files using **Git LFS**.
